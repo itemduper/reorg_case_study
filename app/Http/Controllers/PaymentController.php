@@ -28,17 +28,17 @@ class PaymentController extends Controller
      * Export Payments from a Physician
      *
      * @param Physician $physician
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function export_physician(Physician $physician) {
         return Excel::download(new PaymentsExport($physician->payments), 'payments_physician_'.$physician->id.'_'.now()->format('Ymd\THis').'.xls', \Maatwebsite\Excel\Excel::XLS);
     }
 
     /**
-     * Export Payments from a Physician
+     * Export Payments from a Hospital
      *
      * @param Hospital $hospital
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function export_hospital(Hospital $hospital) {
         return Excel::download(new PaymentsExport($hospital->payments), 'payments_hospital_'.$hospital->id.'_'.now()->format('Ymd\THis').'.xls', \Maatwebsite\Excel\Excel::XLS);
@@ -52,16 +52,6 @@ class PaymentController extends Controller
      */
     public function api_show(Payment $payment) {
         return new PaymentResource($payment);
-    }
-
-    /**
-     * Display results of a search of Payments.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function api_search(Request $request) {
-        return PaymentResource::collection(Payment::take(10)->get());
     }
 
     /**

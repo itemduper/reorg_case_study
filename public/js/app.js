@@ -12065,7 +12065,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     exportLink: function exportLink() {
       if (this.showExportLink) {
-        return '/export/' + this.selectedRecipient.type + '/' + this.selectedRecipient.id;
+        return '/payments/export/' + this.selectedRecipient.type + '/' + this.selectedRecipient.id;
       } else {
         return '/';
       }
@@ -12108,38 +12108,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  methods: {
-    sortChange: function sortChange(params) {
-      var _this2 = this;
-
-      Object.keys(params).forEach(function (col) {
-        if (params[col]) {
-          _this2.tableData.sort(function (a, b) {
-            if (params[col] == 'asc') {
-              return a[col] > b[col] ? 1 : -1;
-            } else if (params[col] == 'desc') {
-              return a[col] < b[col] ? 1 : -1;
-            } else {
-              return 0;
-            }
-          });
-        }
-      });
-    }
-  },
+  methods: {},
   computed: {
     tableData: function tableData() {
-      var _this3 = this;
+      var _this2 = this;
 
       var data = this.rows;
 
       if (this.sortParams !== null) {
         Object.keys(this.sortParams).forEach(function (col) {
-          if (_this3.sortParams[col]) {
+          if (_this2.sortParams[col]) {
             data.sort(function (a, b) {
-              if (_this3.sortParams[col] == 'asc') {
+              if (_this2.sortParams[col] == 'asc') {
                 return a[col] > b[col] ? 1 : -1;
-              } else if (_this3.sortParams[col] == 'desc') {
+              } else if (_this2.sortParams[col] == 'desc') {
                 return a[col] < b[col] ? 1 : -1;
               } else {
                 return 0;
@@ -18999,7 +18981,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#payment-table {\n    width: 98%;\n    margin-left: auto;\n    margin-right: auto;\n}\nspan.ve-table-sort {\n    line-height: 1;\n}\nth.ve-table-header-th {\n    white-space: nowrap;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#payments-table {\n    width: 98%;\n    margin-left: auto;\n    margin-right: auto;\n}\nspan.ve-table-sort {\n    line-height: 1;\n}\nth.ve-table-header-th {\n    white-space: nowrap;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -51006,7 +50988,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("ve-table", {
     attrs: {
-      id: "payment-table",
+      id: "payments-table",
       columns: _vm.cols,
       "table-data": _vm.tableData,
       "sort-option": _vm.sortOption,

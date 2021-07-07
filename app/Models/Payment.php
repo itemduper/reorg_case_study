@@ -92,7 +92,7 @@ class Payment extends Model
             $record[self::$api_to_attribute_map[$key]] = $value;
         }
 
-        $payment = Payment::firstOrNew(['dataset_id' => $record['dataset_id'], 'record_id' => $record['record_id']]);
+        $payment = self::firstOrNew(['dataset_id' => $record['dataset_id'], 'record_id' => $record['record_id']]);
 
         foreach($record as $key => $value) {
             $payment->{$key} = $value;

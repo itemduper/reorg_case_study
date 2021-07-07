@@ -15,9 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('export')->group(function() {
-    Route::get('physician/{physician}', [PaymentController::class, 'export_physician']);
-    Route::get('hospital/{hospital}', [PaymentController::class, 'export_hospital']);
+Route::prefix('payments')->group(function() {
+    Route::prefix('export')->group(function() {
+        Route::get('physician/{physician}', [PaymentController::class, 'export_physician']);
+        Route::get('hospital/{hospital}', [PaymentController::class, 'export_hospital']);
+    });
+
+    Route::get('', function() {
+        return redirect('/');
+    });
 });
 
 Route::get('/', [PaymentController::class, 'index']);

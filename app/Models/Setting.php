@@ -48,7 +48,7 @@ class Setting extends Model
     public static function set($name, $value, $type = 'string') {
         if(isset(self::$valid_types[$type])) {
             // Normalize Shorthand Types
-            $type = self::$valid_types[$type];
+            $type = self::$valid_types[strtolower($type)];
 
             // Validate type matches
             if(self::validateType($value,$type)) {
@@ -118,7 +118,7 @@ class Setting extends Model
      */
     public static function validateType($value, $type) {
         try {
-            switch(self::$valid_types[$type]) {
+            switch(self::$valid_types[strtolower($type)]) {
                 case 'integer':
                     return is_integer($value);
                     break;

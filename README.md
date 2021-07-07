@@ -2,7 +2,7 @@
 
 Thanks for the opportunity!  Here is my case study.  At this time it is a minimum viable product without tests implemented, due to attempting to solve database write performance issues I ran into in my dev environment under WSL2.  I will be updating this package as I am able to implement the remaining features I have planned.
 
-This was developed under using PHP 7.3, Laravel 8, and Node 16.1.0.
+This was developed using PHP 7.3, Laravel 8, and Node 16.1.0.
 
 This requires [composer](https://getcomposer.org/download/) and [npm](https://nodejs.org/en/download/package-manager/) to install.
 
@@ -25,7 +25,7 @@ php artisan migrate:fresh
 php artisan db:seed
 ```
 
-Once your database is generated, you will need to ingest the data.  For initial ingestion, and basic testing, I would recommend running the following command.  This will attempt to ingest the entire dataset, however testing can be completed with any amount of records, so you can interrupt with Ctrl+C after a few thousand records are ingested.
+Once your database is generated, you will need to ingest the dataset.  For initial ingestion, and basic testing, I would recommend running the following command.  This will attempt to ingest the entire dataset, however testing can be completed with any amount of records, so you can interrupt with Ctrl+C after a few thousand records are ingested.
 
 ```
 php artisan data:ingest

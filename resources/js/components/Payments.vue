@@ -97,7 +97,7 @@
             },
             exportLink() {
                 if(this.showExportLink) {
-                    return '/export/'+this.selectedRecipient.type+'/'+this.selectedRecipient.id;
+                    return '/payments/export/'+this.selectedRecipient.type+'/'+this.selectedRecipient.id;
                 } else {
                     return '/';
                 }
