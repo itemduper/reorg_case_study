@@ -76,11 +76,13 @@ class PaymentController extends Controller
             'q' => 'required|regex:/^([a-z0-9\.\-\s]+)?$/i'
         ]);
 
+        // Find FirstName and LastName from potentially FirstName MiddleName LastName Suffix
+        // If both a FirstName and LastName are found, compare against a Full Name field, if just one name is found, search for FirstName OR LastName.
         preg_match('/^([a-z\.-]+)\s*(?:[a-z\.-]+\s+)?([a-z\.-]+)?(?:\s+[a-z\.-]+)?$/i', $validated['q'], $names);
         if(isset($names[2])) {
             $physicians = Physician::where(DB::raw("concat(first_name, ' ', last_name)"),'like',"%$names[1] $names[2]%")->get();
         } else if(isset($names[1])) {
-            $physicians = Physician::where('first_name','like',"'%$names[1]%'")->orWhere('last_name','like',"%$names[1]%")->get();
+            $physicians = Physician::where('first_name','like',"%$names[1]%")->orWhere('last_name','like',"%$names[1]%")->get();
         } else {
             $physicians = collect();
         }
