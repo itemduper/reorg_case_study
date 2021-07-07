@@ -1,5 +1,5 @@
 <template>
-    <ve-table id="payment-table" :columns="cols" :table-data="tableData" :sort-option="sortOption" :border-x="true" :border-y="true" />
+    <ve-table id="payments-table" :columns="cols" :table-data="tableData" :sort-option="sortOption" :border-x="true" :border-y="true" />
 </template>
 
 <script>
@@ -13,27 +13,13 @@
                 sortParams: null,
                 sortOption: {
                     sortChange: (params) => {
-                        this.sortParams =  params;
+                        this.sortParams = params;
                     },
                 },
             }
         },
         methods: {
-            sortChange(params) {
-                Object.keys(params).forEach(col => {
-                    if(params[col]) {
-                        this.tableData.sort((a, b) => {
-                            if(params[col] == 'asc') {
-                                return (a[col] > b[col]) ? 1 : -1;
-                            } else if(params[col] == 'desc') {
-                                return (a[col] < b[col]) ? 1 : -1;
-                            } else {
-                                return 0;
-                            }
-                        });
-                    }
-                });
-            },
+
         },
         computed: {
             tableData() {
@@ -65,7 +51,7 @@
 </script>
 
 <style>
-    #payment-table {
+    #payments-table {
         width: 98%;
         margin-left: auto;
         margin-right: auto;
