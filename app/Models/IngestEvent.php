@@ -9,7 +9,8 @@ use App\Models\IngestJob;
 
 class IngestEvent extends Model
 {
-    use HasFactory;
+    // TODO
+    // use HasFactory;
 
     /**
      * Fillable attributes

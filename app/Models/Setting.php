@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    // TODO
-    // use HasFactory;
+    use HasFactory;
 
     /**
      * Fillable attributes
@@ -47,6 +46,9 @@ class Setting extends Model
      */
     public static function set($name, $value, $type = 'string') {
         if(isset(self::$valid_types[$type])) {
+            // All Setting names are lower case.
+            $name = strtolower($name);
+
             // Normalize Shorthand Types
             $type = self::$valid_types[strtolower($type)];
 
@@ -79,6 +81,9 @@ class Setting extends Model
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Thrown when $errorIfNotFound is set to true and a Setting is not found under the given $name.
      */
     public static function unset($name, $errorIfNotFound = false) {
+        // All Setting names are lower case.
+        $name = strtolower($name);
+
         $setting = Setting::where('name',$name);
 
         if($setting->exists()) {
@@ -98,6 +103,9 @@ class Setting extends Model
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Thrown when $errorIfNotFound is set to true and a Setting is not found under the given $name.
      */
     public static function get($name, $default = null, $errorIfNotFound = false) {
+        // All Setting names are lower case.
+        $name = strtolower($name);
+        
         $setting = Setting::where('name',$name);
 
         if($setting->exists()) {

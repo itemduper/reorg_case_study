@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
-    // TODO
-    // use HasFactory;
+    use HasFactory;
 
     /**
      * Guarded Attributes

@@ -9,8 +9,7 @@ use App\Models\Dataset;
 
 class Payment extends Model
 {
-    // TODO
-    // use HasFactory;
+    use HasFactory;
 
     /**
      * Guarded Attributes

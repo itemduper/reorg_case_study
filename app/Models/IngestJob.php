@@ -17,7 +17,8 @@ use App\Models\Hospital;
 
 class IngestJob extends Model
 {
-    use HasFactory;
+    // TODO
+    // use HasFactory;
 
     /**
      * Fillable attributes

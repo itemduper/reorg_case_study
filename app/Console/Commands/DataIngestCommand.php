@@ -19,7 +19,7 @@ class DataIngestCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Triggers to ingest data from all datasets marked to ingest.';
+    protected $description = 'Starts ingesting data from all datasets marked to ingest.';
 
     /**
      * Create a new command instance.
@@ -38,8 +38,6 @@ class DataIngestCommand extends Command
      */
     public function handle()
     {
-        \DB::disableQueryLog();
-
         $datasets = Dataset::where('ingesting', true)->get();
 
         foreach($datasets as $dataset) {

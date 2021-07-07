@@ -9,8 +9,7 @@ use App\Models\Address;
 
 class Hospital extends Model
 {
-    // TODO
-    // use HasFactory;
+    use HasFactory;
 
     /**
      * Guarded Attributes
