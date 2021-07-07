@@ -36,3 +36,9 @@ For ingesting new data on a schedule and continuing to monitor for changes, a la
 ```
 php artisan schedule:work
 ```
+
+Finally, to run the local test server and access the site, you can do so by running the following command and then visiting http://localhost:8000
+
+```
+php artisan serve
+```
