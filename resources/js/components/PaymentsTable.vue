@@ -10,7 +10,13 @@
         },
         data() {
             return {
+                /**
+                 * Parameters to sort the table's columns with.
+                 */
                 sortParams: null,
+                /**
+                 * Sort Option object used in vue-easytable
+                 */
                 sortOption: {
                     sortChange: (params) => {
                         this.sortParams = params;
@@ -22,6 +28,9 @@
 
         },
         computed: {
+            /**
+             * Rows to include in the table sorted by the sortParams.
+             */
             tableData() {
                 let data = this.rows;
 

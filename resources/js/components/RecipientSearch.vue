@@ -33,18 +33,44 @@
         extends: VueTypeahead,
         data() {
             return {
+                /**
+                 * API endpoint used by the typeahead to query payment recipients.
+                 */
                 src: '/api/payment/recipient/search',
+                /**
+                 * Limit to typeahead results.
+                 */
                 limit: 10,
+                /**
+                 * Minimum characters before the typeahead starts querying the API.
+                 */
                 minChars: 3,
+                /**
+                 * Tells the Typeahead to automatically select the first result.
+                 */
+                selectFirst: true,
             }
         },
         methods: {
+            /**
+             * Triggered when an item is selected from the typeahead.
+             * 
+             * @param {Object} item Item selected from the typeahead.
+             * 
+             * @event selected Notifies parent component that an item was selected.
+             * @property {Object} item item selected from the typeahead.
+             */
             onHit(item) {
                 $('.Typeahead__input').blur();
                 this.query = item.name;
                 this.$emit('selected', item);
             },
 
+            /**
+             * Resets the typeahead.
+             * 
+             * @event reset Notifies parent component the typeahead was reset.
+             */
             resetSearch() {
                 this.reset();
                 this.$emit('reset');
