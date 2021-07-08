@@ -23,6 +23,13 @@ class Dataset extends Model
     ];
 
     /**
+     * Fillable attributes
+     *
+     * @var array
+     */
+    protected $fillable = ['ingesting'];
+
+    /**
      * Starts or resumes an Ingestion Job for this Dataset.
      *
      * @return void

@@ -166,7 +166,13 @@ class IngestJob extends Model
         $status = -1;
 
         do {
-            if($this->is_initial) {
+            // In case is_initial doesn't get set.
+            if($this->is_initial == null) {
+                $this->is_initial = true;
+                $this->save();
+            }
+
+            if($this->is_initial == true) {
                 $additional_arguments = '';
             } else {
                 // If this is not an initial ingest, we only care about change_types CHANGED, ADD, and NEW
@@ -256,7 +262,7 @@ class IngestJob extends Model
                 // Attempt to create payments for JSON objects in $response, log errors on failure.
                 foreach($response->json() as $record) {
                     try {
-                        if($record['payment_publication_date'] != $this->publication_date) {
+                        if(date_parse($record['payment_publication_date']) != date_parse($this->publication_date)) {
                             if($this->publication_date == null) {
                                 IngestEvent::log($this,"Setting publication_date for Ingest Job to: $record[payment_publication_date]");
 
