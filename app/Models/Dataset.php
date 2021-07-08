@@ -28,30 +28,7 @@ class Dataset extends Model
      * @return void
      */
     public function ingest() {
-        // Check for an incomplete job, and run it if one is found.
-        $job = $this->ingest_jobs()->whereNull('completed_at');
-
-        if($job->exists()) {
-            $job->first()->run();
-        } else {
-            $job = new IngestJob;
-
-            // Determine if jobs have previously been completed for this dataset
-            // Set offset to where the last completed job ended at
-            $last_complete_job = $this->ingest_jobs()->orderByDesc('completed_at');
-            if($last_complete_job->exists()) {
-                $job->offset = $last_complete_job->first()->offset;
-            } else {
-                $job->offset = 0;
-            }
-
-            $job->starting_offset = $job->offset;
-            $job->dataset()->associate($this);
-
-            $job->save();
-
-            $job->run();
-        }
+        IngestJob::ingest($this);
     }
 
     /**

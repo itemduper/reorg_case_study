@@ -27,7 +27,7 @@ class IngestEvent extends Model
     protected static $event_levels = ['FAILURE','ERROR','WARN','INFO'];
 
     /**
-     * Creates an IngestEvent
+     * Logs an IngestEvent
      *
      * @param IngestJob $job Job the event is related to.
      * @param string $content Content of the event

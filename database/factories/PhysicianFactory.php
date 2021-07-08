@@ -76,7 +76,7 @@ class PhysicianFactory extends Factory
         }
 
         // Add a random cms_id
-        $output['cms_id'] = rand(100,10000);
+        $output['cms_id'] = $this->faker->unique()->numberBetween(100,10000) + 200000000;
 
         // Generate an address
         $output['address_id'] = Address::factory();

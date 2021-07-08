@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="pb-2 mx-auto d-flex" style="max-width: 800px">
-            <recipient-search v-on:selected="recipientSelected" v-on:reset="resetTable" />
+            <recipient-search v-on:selected="recipientSelected" v-on:reset="resetTable" style="padding-left: 40px" />
             <div class="pl-2">
                 <a :href="exportLink" target="_blank" class="export-button" :class="{'invisible': !showExportLink}">
                     <font-awesome-icon :icon="['fas', 'download']" style="position: relative; top: 12;" />
