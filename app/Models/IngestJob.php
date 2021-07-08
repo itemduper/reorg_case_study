@@ -193,6 +193,7 @@ class IngestJob extends Model
                     }
 
                     $this->publication_date = null;
+                    $this->is_initial = true;
                     $this->offset = 0;
                     $this->starting_offset = 0;
 
@@ -269,7 +270,7 @@ class IngestJob extends Model
 
                         // Attempt to ingest payment, if it fails consider that a fatal error.
                         if(!$this->ingestPayment($record)) {
-                            IngestEvent::($this,'Unable to ingest payment: '.print_r($record,true),0);
+                            IngestEvent::log($this,'Unable to ingest payment: '.print_r($record,true),0);
                             return self::$status_codes['failed'];
                         }
                     } catch(\Exception $e) {
