@@ -33,7 +33,7 @@ Once your database is generated, you will need to ingest the dataset.  For initi
 php artisan data:ingest
 ```
 
-For ingesting new data on a schedule and continuing to monitor for changes, a Laravel scheduled task has been configured to run hourly.  For configuring this to run via crond, please see the following [documentation](https://laravel.com/docs/8.x/scheduling#running-the-scheduler).  For running locally, you can run the following command.
+For ingesting new data on a schedule and continuing to monitor for changes, a Laravel scheduled task has been configured to run hourly.  For configuring this to run via crond, please see the following [documentation](https://laravel.com/docs/8.x/scheduling#running-the-scheduler).  For running the scheduler locally, you can use the following command.
 
 ```shell
 php artisan schedule:work

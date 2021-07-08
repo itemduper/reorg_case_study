@@ -10,7 +10,7 @@ window.Vue = require('vue').default;
 
 // Add Axios
 import Axios from 'axios';
-Vue.prototype.$http = Axios
+Vue.prototype.$http = Axios;
 
 // Add VueEasyTable
 import "vue-easytable/libs/theme-default/index.css";
@@ -22,7 +22,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinner, faSearch, faTimes, faDownload } from '@fortawesome/free-solid-svg-icons';
 library.add(faSpinner, faSearch, faTimes, faDownload);
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 /**
  * The following block of code may be used to automatically register your

@@ -179,7 +179,22 @@ class IngestJob extends Model
                 $additional_arguments = '&$where=change_type+in(\'CHANGED\',\'ADD\',\'NEW\')';
             }
 
-            $status = $this->run_serial($additional_arguments);
+            // Test Publication Date (I'm aware of how hacky this looks passing values between switch blocks.)
+            switch($this->testPublicationDate()) {
+                // completed, meaning publication_date matched
+                case 0:
+                    $status = $this->run_serial($additional_arguments);
+                    break;
+                // new_publication_date, pass along $status = 4 to next switch block to handle.
+                case 4:
+                    $status = 4;
+                    break;
+                // Any other result is a failure.
+                default: 
+                    $status = 1;
+                    IngestEvent::log($this,'Unable to test publication date.',1);
+                    break;
+            }
 
             // Check to see if $status is one where we need to adjust the IngestJob
             switch($status) {
@@ -379,6 +394,54 @@ class IngestJob extends Model
         Payment::updateOrCreateFromAPI(['dataset_id' => $this->dataset->id] + $payment_data);
 
         return true;
+    }
+
+    /**
+     * Tests the publication date of the current dataset with tolerance for timeouts.
+     *
+     * @return int Status code matching self::$status_code
+     */
+    public function testPublicationDate() {
+        // If publication_date isn't set, return complete (0), there is nothing to compare against.
+        if($this->publication_date == null) return self::$status_codes['complete'];
+
+        // Set parameters
+        $endpoint = $this->dataset->api_endpoint;
+        $arguments = '?$select=distinct+payment_publication_date';
+        $timeout = Setting::get('ingest_timeout',300);
+        $max_consecutive_timeouts = Setting::get('ingest_max_consecutive_timeouts',3);
+        $timeouts = 0;
+        do {
+            try {
+                // Initialize HTTP Request
+                IngestEvent::log($this,"Requesting publication date - Query: $endpoint$arguments");
+                $response = Http::timeout($timeout)->acceptJson()->get($endpoint.$arguments);
+                
+                // Should only be one response of payment_publication_date
+                $record = $response->json()[0];
+
+                // If payment_publication_date matches
+                if(date_parse($record['payment_publication_date']) != date_parse($this->publication_date)) {
+                    IngestEvent::log($this,"API payment_publication_date '$record[payment_publication_date]' does not match job publication_date '$this->publication_date'.",2);
+                    return self::$status_codes['new_publication_date'];
+                } else {
+                    IngestEvent::log($this,"Publication date matches.");
+                    return self::$status_codes['complete'];
+                }
+            } catch(\Illuminate\Http\Client\ConnectionException $e) {
+                // A timeout occurred, increment timeouts and log a warning.
+                IngestEvent::log($this,"Timed out finding current publication_date",2);
+            } catch(\Exception $e) {
+                // A fatal error occurred, log it and stop running.
+                IngestEvent::log($this,"Fatal Error while finding current publication date: $e",0);
+                return self::$status_codes['failed'];
+            }
+            
+            $timeouts++;
+        } while($timeouts < $max_consecutive_timeouts);
+
+        // Max timeouts hit
+        return self::$status_codes['failed'];
     }
 
     /**
